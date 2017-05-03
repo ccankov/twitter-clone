@@ -14,12 +14,12 @@
 
   <label>
     Mention
-    <select name="tweet[mentioned_user_ids][]">
-      <option></option>
+    <select name="tweet[mentioned_user_ids][]" multiple>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"><%= user.username %></option>
       <% end %>
     </select>
+    <strong>Hold (ctrl/cmd) to select multiple mentions.</strong>
   </label>
   <br>
 

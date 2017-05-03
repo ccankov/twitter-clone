@@ -26,6 +26,7 @@ class TweetCompose{
     this.clearInput();
     let $tweetLi = this._composeTweetLi(res);
     this.$feed.prepend($tweetLi);
+    this.$form.find('input').prop('disabled', false);
   }
 
   clearInput() {
@@ -36,6 +37,7 @@ class TweetCompose{
     event.preventDefault();
     let data = this.$form.serializeJSON();
     APIUtil.createTweet(data).then(this.handleSuccess.bind(this));
+    this.$form.find('input').prop('disabled', true);
   }
 
   _composeTweetLi(tweet) {
