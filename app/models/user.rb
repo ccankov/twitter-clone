@@ -42,18 +42,17 @@ class User < ActiveRecord::Base
   end
 
   def feed_tweets(limit = nil, max_created_at = nil)
-    @tweets = Tweet
+    @tweets = Tweet.includes(:user).includes(:mentioned_users)
       .joins(:user)
       .joins("LEFT OUTER JOIN follows ON users.id = follows.followee_id")
       .where("tweets.user_id = :id OR follows.follower_id = :id", id: self.id)
       .order("tweets.created_at DESC")
-      .uniq
 
-    # TODO: How can we use limit/max_created_at here??
 
-    @tweets
+
+    @tweets.uniq
   end
-  
+
   def followed_user_ids
     @followed_user_ids ||= out_follows.pluck(:followee_id)
   end
